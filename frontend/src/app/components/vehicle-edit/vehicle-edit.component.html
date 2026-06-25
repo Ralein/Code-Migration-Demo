@@ -1,0 +1,86 @@
+<div class="card">
+  <h2>Edit Vehicle Details</h2>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="alert alert-info">Loading vehicle details...</div>
+  } @else {
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="vehicleId">Vehicle ID (read-only)</label>
+        <input type="text" id="vehicleId" formControlName="vehicleId" />
+      </div>
+
+      <div class="form-group">
+        <label for="ownerName">Owner Name (min 3 chars)</label>
+        <input
+          type="text"
+          id="ownerName"
+          formControlName="ownerName"
+          placeholder="e.g. John Doe"
+        />
+        @if (
+          editForm.get("ownerName")?.touched && editForm.get("ownerName")?.invalid
+        ) {
+          <div class="field-error">
+            @if (editForm.get("ownerName")?.errors?.["required"]) {
+              Owner Name is required.
+            }
+            @if (editForm.get("ownerName")?.errors?.["minlength"]) {
+              Owner Name must be at least 3 characters.
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="modelName">Model Name</label>
+        <input
+          type="text"
+          id="modelName"
+          formControlName="modelName"
+          placeholder="e.g. Tesla Model 3"
+        />
+        @if (
+          editForm.get("modelName")?.touched && editForm.get("modelName")?.invalid
+        ) {
+          <div class="field-error">
+            Model Name is required.
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="regNumber">Registration Number (e.g. TS09AB1234)</label>
+        <input
+          type="text"
+          id="regNumber"
+          formControlName="regNumber"
+          placeholder="e.g. TS09AB1234"
+        />
+        @if (
+          editForm.get("regNumber")?.touched && editForm.get("regNumber")?.invalid
+        ) {
+          <div class="field-error">
+            @if (editForm.get("regNumber")?.errors?.["required"]) {
+              Registration Number is required.
+            }
+            @if (editForm.get("regNumber")?.errors?.["pattern"]) {
+              Must match pattern (2 uppercase letters, 2 digits, 2 uppercase letters, 4 digits).
+            }
+          </div>
+        }
+      </div>
+
+      <div class="d-flex gap-1 mt-3">
+        <button type="submit" [disabled]="saving" class="btn btn-primary">
+          {{ saving ? "Saving Changes..." : "Save Changes" }}
+        </button>
+        <a routerLink="/vehicles" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  }
+</div>

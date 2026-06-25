@@ -1,0 +1,16 @@
+<nav>
+  <span class="brand">🚗 Vehicle Service</span>
+  <a
+    routerLink="/vehicles"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    View Vehicles
+  </a>
+  <a routerLink="/vehicles/add" routerLinkActive="active">Add Vehicle</a>
+  <a routerLink="/vehicles/search" routerLinkActive="active">Search Vehicle</a>
+</nav>
+
+<div class="container">
+  <router-outlet />
+</div>

@@ -1,0 +1,86 @@
+<div class="card">
+  <h2>Search Vehicle</h2>
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="vehicleId">Enter Vehicle ID to Search</label>
+      <input
+        type="text"
+        id="vehicleId"
+        formControlName="vehicleId"
+        placeholder="e.g. 101"
+      />
+      @if (
+        searchForm.get("vehicleId")?.touched &&
+        searchForm.get("vehicleId")?.invalid
+      ) {
+        <div class="field-error">
+          @if (searchForm.get("vehicleId")?.errors?.["required"]) {
+            Vehicle ID is required.
+          }
+          @if (
+            searchForm.get("vehicleId")?.errors?.["min"] ||
+            searchForm.get("vehicleId")?.errors?.["pattern"]
+          ) {
+            Vehicle ID must be a number greater than 0.
+          }
+        </div>
+      }
+    </div>
+
+    <button type="submit" [disabled]="loading" class="btn btn-primary mt-2">
+      {{ loading ? "Searching..." : "Search" }}
+    </button>
+  </form>
+</div>
+
+@if (loading) {
+  <div class="card text-center">
+    <div class="alert alert-info">Searching for vehicle...</div>
+  </div>
+}
+
+@if (hasSearched) {
+  @if (searchedVehicle) {
+    <div class="card">
+      <h2>Search Results</h2>
+      <table>
+        <tbody>
+          <tr>
+            <td><strong>Vehicle ID</strong></td>
+            <td>{{ searchedVehicle.vehicleId }}</td>
+          </tr>
+          <tr>
+            <td><strong>Owner Name</strong></td>
+            <td>{{ searchedVehicle.ownerName }}</td>
+          </tr>
+          <tr>
+            <td><strong>Model Name</strong></td>
+            <td>{{ searchedVehicle.modelName }}</td>
+          </tr>
+          <tr>
+            <td><strong>Registration Number</strong></td>
+            <td>{{ searchedVehicle.regNumber }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex gap-1 mt-3">
+        <a
+          [routerLink]="['/vehicles/edit', searchedVehicle.vehicleId]"
+          class="btn btn-primary"
+        >
+          Edit
+        </a>
+        <a routerLink="/vehicles" class="btn btn-secondary">Back to List</a>
+      </div>
+    </div>
+  } @else {
+    <div class="card">
+      <h2>Search Results</h2>
+      <div class="alert alert-danger">
+        {{ errorMessage || "No vehicle found matching that ID." }}
+      </div>
+    </div>
+  }
+}

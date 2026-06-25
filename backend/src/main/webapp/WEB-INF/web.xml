@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  web.xml — Jakarta EE 10 / Servlet 6.0 deployment descriptor
+
+  Migration notes (Java 8 / Tomcat 9 -> Java 21 / Tomcat 10.1):
+  - Schema namespace changed from Java EE (xmlns.jcp.org/xml/ns/javaee)
+    to Jakarta EE (jakarta.ee/xml/ns/jakartaee), version 6.0.
+  - Servlet 6.0 spec requires Tomcat 10.1+.
+  - Individual servlet and filter mappings are retained in web.xml for
+    explicitness, supplementing the @WebServlet / @WebFilter annotations.
+  - A welcome-file list redirects the root URL to the Angular SPA entry point.
+  - Session timeout reduced to 30 minutes (sensible production default).
+-->
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0"
+         metadata-complete="false">
+
+    <display-name>VehicleServiceApp</display-name>
+    <description>
+        Vehicle Service Management System — Java 21 + Jakarta EE 10 REST backend
+    </description>
+
+    <!-- ================================================================
+         Session configuration
+         ================================================================ -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>false</secure><!-- set true in production behind HTTPS -->
+        </cookie-config>
+    </session-config>
+
+    <!-- ================================================================
+         CORS filter — applied to all /api/* paths
+         The @WebFilter annotation on CorsFilter also covers this, but the
+         init-param for the allowed origin is configured here so it can be
+         changed per environment without recompiling.
+         ================================================================ -->
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>com.automotive.filter.CorsFilter</filter-class>
+        <init-param>
+            <param-name>allowedOrigin</param-name>
+            <param-value>http://localhost:4200</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
+    <!-- ================================================================
+         REST API servlet
+         The @WebServlet("/api/vehicles/*") annotation on VehicleServlet
+         is the primary mapping; this entry is kept for documentation
+         clarity and to allow overriding the URL pattern here if needed.
+         ================================================================ -->
+    <servlet>
+        <servlet-name>VehicleServlet</servlet-name>
+        <servlet-class>com.automotive.servlet.VehicleServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VehicleServlet</servlet-name>
+        <url-pattern>/api/vehicles/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================================================================
+         Welcome file — Angular SPA entry point
+         ================================================================ -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- ================================================================
+         Error pages
+         ================================================================ -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/index.html</location>
+    </error-page>
+
+</web-app>

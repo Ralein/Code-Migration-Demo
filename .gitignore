@@ -1,0 +1,23 @@
+# Build and Target directories
+bin/
+target/
+build/
+Servers/
+*.class
+
+# Eclipse metadata
+.settings/
+.classpath
+.project
+
+# Node / Angular
+node_modules/
+.angular/
+dist/
+
+# Python / Sandbox
+__pycache__/
+.sandbox_scratchpad.json
+.vscode/
+.idea/
+.DS_Store

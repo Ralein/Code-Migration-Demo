@@ -1,0 +1,140 @@
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6f9;
+}
+
+/* Header */
+.navbar{
+    background:#003057;
+    color:white;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.navbar h1{
+    margin:0;
+}
+
+/* Main Container */
+.container{
+    width:85%;
+    margin:auto;
+    margin-top:30px;
+}
+
+/* Card Layout */
+.card{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
+
+h2{
+    color:#003057;
+    margin-top:0;
+}
+
+/* Form */
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+input:focus{
+    outline:none;
+    border-color:#003057;
+}
+
+/* Buttons */
+button{
+    background:#003057;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:15px;
+    margin-right:10px;
+}
+
+button:hover{
+    background:#004f99;
+}
+
+/* Success Message */
+.success-message{
+    background:#d4edda;
+    color:#155724;
+    padding:15px;
+    margin-bottom:20px;
+    border-radius:5px;
+    border-left:5px solid #28a745;
+}
+
+/* Error Message */
+.error-message{
+    background:#f8d7da;
+    color:#721c24;
+    padding:15px;
+    margin-bottom:20px;
+    border-radius:5px;
+    border-left:5px solid #dc3545;
+}
+
+/* Table */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#003057;
+    color:white;
+    text-align:left;
+}
+
+th, td{
+    border:1px solid #ddd;
+    padding:12px;
+}
+
+tr:nth-child(even){
+    background:#f8f9fa;
+}
+
+tr:hover{
+    background:#e8f0fe;
+}
+
+/* Dashboard Cards */
+.dashboard{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.dashboard-card{
+    background:white;
+    width:250px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
+
+.dashboard-card h3{
+    margin-top:0;
+    color:#003057;
+}

@@ -1,0 +1,46 @@
+<div class="card">
+  <h2>Vehicle Inventory</h2>
+
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="alert alert-info">Loading vehicles...</div>
+  } @else {
+    @if (vehicles.length === 0) {
+      <div class="alert alert-info">No vehicles registered yet.</div>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th>Vehicle ID</th>
+            <th>Owner Name</th>
+            <th>Model Name</th>
+            <th>Registration Number</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (vehicle of vehicles; track vehicle.vehicleId) {
+            <tr>
+              <td>{{ vehicle.vehicleId }}</td>
+              <td>{{ vehicle.ownerName }}</td>
+              <td>{{ vehicle.modelName }}</td>
+              <td>{{ vehicle.regNumber }}</td>
+              <td>
+                <div class="d-flex gap-1">
+                  <a [routerLink]="['/vehicles/edit', vehicle.vehicleId]" class="btn btn-primary btn-sm">Edit</a>
+                  <button (click)="deleteVehicle(vehicle.vehicleId)" class="btn btn-danger btn-sm">Delete</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+</div>
